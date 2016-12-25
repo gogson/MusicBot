@@ -82,6 +82,9 @@ class Config:
         self.blacklist_file = config.get('Files', 'BlacklistFile', fallback=ConfigDefaults.blacklist_file)
         self.auto_playlist_file = config.get('Files', 'AutoPlaylistFile', fallback=ConfigDefaults.auto_playlist_file)
 
+        self.display_filename_url = config.getboolean('WebAudioCache', 'DisplayFilenameURL', fallback=ConfigDefaults.display_filename_url)
+        self.audio_cache_root_url = config.get('WebAudioCache', 'AudioCacheRootURL', fallback=ConfigDefaults.audio_cache_root_url)
+
         self.run_checks()
 
 
@@ -187,6 +190,8 @@ class ConfigDefaults:
     delete_messages = True
     delete_invoking = False
     debug_mode = False
+    display_filename_url = False
+    audio_cache_root_url = ""
 
     options_file = 'config/options.ini'
     blacklist_file = 'config/blacklist.txt'
