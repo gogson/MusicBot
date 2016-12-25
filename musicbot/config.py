@@ -83,6 +83,7 @@ class Config:
         self.auto_playlist_file = config.get('Files', 'AutoPlaylistFile', fallback=ConfigDefaults.auto_playlist_file)
 
         self.display_filename_url = config.getboolean('WebAudioCache', 'DisplayFilenameURL', fallback=ConfigDefaults.display_filename_url)
+        self.enable_download = config.getboolean('WebAudioCache', 'EnableDownload', fallback=ConfigDefaults.enable_download)
         self.audio_cache_root_url = config.get('WebAudioCache', 'AudioCacheRootURL', fallback=ConfigDefaults.audio_cache_root_url)
 
         self.run_checks()
@@ -192,6 +193,7 @@ class ConfigDefaults:
     debug_mode = False
     display_filename_url = False
     audio_cache_root_url = ""
+    enable_download = True
 
     options_file = 'config/options.ini'
     blacklist_file = 'config/blacklist.txt'

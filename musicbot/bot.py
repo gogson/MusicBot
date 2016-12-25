@@ -1258,6 +1258,22 @@ class MusicBot(discord.Client):
 
         return Response("Oh well :frowning:", delete_after=30)
 
+    async def cmd_download(self, player, channel, server, message):
+        """
+        Usage:
+            {command_prefix}download
+
+        Get the cached version of the song as a file
+        """
+        if self.config.enable_download is True:
+            if player.current_entry:
+                await self.send_file(channel, player.current_entry.filename, filename=player.current_entry.filename, content=player.current_entry.title)
+            else:
+                return Response(
+                    "I'm not playing anything dude...",
+                    delete_after=30
+                )
+
     async def cmd_np(self, player, channel, server, message):
         """
         Usage:
