@@ -352,6 +352,7 @@ class MusicBot(discord.Client):
 
     async def get_player(self, channel, create=False) -> MusicPlayer:
         server = channel.server
+        self.server = server
 
         if server.id not in self.players:
             if not create:
@@ -375,8 +376,23 @@ class MusicBot(discord.Client):
 
         return self.players[server.id]
 
+    async def change_current_song_in_nickname(self, entry=None, to_default=False):
+        try:
+            if self.config.display_song_in_nickname is True and to_default is True:
+                await self.change_nickname(self.server.me, self.config.default_bot_name)
+            else:
+                if self.config.display_song_in_nickname is True and self.server is not None and entry is not None:
+                    song_name = entry.title[0:29] + "..." if len(entry.title) > 32 else entry.title
+                    await self.change_nickname(self.server.me, song_name)
+                else:
+                    await self.change_nickname(self.server.me, self.config.default_bot_name)
+        except Exception as e:
+            print("Error while changing nickname for current song:")
+            print(e)
+
     async def on_player_play(self, player, entry):
         await self.update_now_playing(entry)
+        await self.change_current_song_in_nickname(entry);
         player.skip_state.reset()
 
         channel = entry.meta.get('channel', None)
@@ -406,12 +422,15 @@ class MusicBot(discord.Client):
 
     async def on_player_resume(self, entry, **_):
         await self.update_now_playing(entry)
+        await self.change_current_song_in_nickname(entry);
 
     async def on_player_pause(self, entry, **_):
         await self.update_now_playing(entry, True)
+        await self.change_current_song_in_nickname(entry, True);
 
     async def on_player_stop(self, **_):
         await self.update_now_playing()
+        await self.change_current_song_in_nickname(None, True);
 
     async def on_player_finished_playing(self, player, **_):
         if not player.playlist.entries and not player.current_entry and self.config.auto_playlist:

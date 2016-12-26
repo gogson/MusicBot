@@ -78,6 +78,8 @@ class Config:
         self.delete_messages  = config.getboolean('MusicBot', 'DeleteMessages', fallback=ConfigDefaults.delete_messages)
         self.delete_invoking = config.getboolean('MusicBot', 'DeleteInvoking', fallback=ConfigDefaults.delete_invoking)
         self.debug_mode = config.getboolean('MusicBot', 'DebugMode', fallback=ConfigDefaults.debug_mode)
+        self.display_song_in_nickname = config.getboolean('MusicBot', 'SongNameInNickname', fallback=ConfigDefaults.display_song_in_nickname)
+        self.default_bot_name = config.get('MusicBot', 'DefaultBotName', fallback=ConfigDefaults.default_bot_name)
 
         self.blacklist_file = config.get('Files', 'BlacklistFile', fallback=ConfigDefaults.blacklist_file)
         self.auto_playlist_file = config.get('Files', 'AutoPlaylistFile', fallback=ConfigDefaults.auto_playlist_file)
@@ -194,6 +196,8 @@ class ConfigDefaults:
     display_filename_url = False
     audio_cache_root_url = ""
     enable_download = True
+    display_song_in_nickname = False
+    default_bot_name = "Radio Bot"
 
     options_file = 'config/options.ini'
     blacklist_file = 'config/blacklist.txt'
