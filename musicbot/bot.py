@@ -1293,6 +1293,18 @@ class MusicBot(discord.Client):
                     delete_after=30
                 )
 
+    async def cmd_yes(self, player, channel, author, permissions):
+        """
+        Usage:
+            {command_prefix}download
+
+        Because we love Birsey race car noise
+        """
+        await self.cmd_play(player, channel, author, permissions, [], "https://www.youtube.com/watch?v=-MZQIU5n1wk")
+        player.skip()  # check autopause stuff here
+
+        return Response("Mmmmmm.....YES !")
+
     async def cmd_np(self, player, channel, server, message):
         """
         Usage:
