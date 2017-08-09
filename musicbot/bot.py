@@ -1305,6 +1305,30 @@ class MusicBot(discord.Client):
 
         return Response("Mmmmmm.....YES !")
 
+    async def cmd_add(self, player, channel, author, permissions, leftover_args, song_url):
+        """
+        Usage:
+            {command_prefix}add song_link
+
+        """
+
+        index = -1
+        output = "Song has been added to default playlist"
+        file = open("./config/autoplaylist.txt", "r+")
+        data = file.readlines()
+
+        try:
+            # Look if the song is already in the playlist file
+            index = data.index(song_url + '\n')
+        except:
+            # If not, add it
+            file.write(song_url + '\n')
+
+        if index >= 0:
+            output = "Song is already in default playlist"
+        
+        return Response(output)
+
     async def cmd_np(self, player, channel, server, message):
         """
         Usage:
