@@ -5,6 +5,7 @@
 *.sh
 
 audio_cache/
+playlists/
 dectalk/
 
 discord.log

@@ -21,6 +21,7 @@ from textwrap import dedent
 from datetime import timedelta
 from random import choice, shuffle
 from collections import defaultdict
+from pathlib import Path
 
 from musicbot.playlist import Playlist
 from musicbot.player import MusicPlayer
@@ -1350,10 +1351,22 @@ class MusicBot(discord.Client):
         return Response(output)
 
     def create_playlist(self, playlist_name):
+        self.playlist_folder_exists()
+
+        playlist_path = Path("./playlists/" + playlist_name + ".pl")
+        if playlist_path.is_file():
+            return "Playlist already exists"
+
+        playlist = open("./playlists/" + playlist_name + ".pl", "a").close()
         return "Playlist '" + playlist_name + "' created"
 
     def add_song_to_playlist(self, playlist_name, song_url):
         return "Playlist '" + playlist_name + "' updated"
+
+    def playlist_folder_exists(self):
+        directory = "./playlists"
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
     async def cmd_np(self, player, channel, server, message):
         """
