@@ -1329,6 +1329,32 @@ class MusicBot(discord.Client):
         
         return Response(output)
 
+    async def cmd_playlist(self, player, channel, author, permissions, leftover_args, name, action, song_url=""):
+        """
+        Manage playlists.
+
+        Usage:
+             {command_prefix}playlist name action [song_url]
+
+        Available actions : 
+        - create -> create a playlist with the given name
+        - add    -> add a song by url to the given playlist
+        """
+
+        output = "Unknown action"
+        if action == "create":
+            output = self.create_playlist(name)
+        elif action == "add":
+            output = self.add_song_to_playlist(name, song_url)
+
+        return Response(output)
+
+    def create_playlist(self, playlist_name):
+        return "Playlist '" + playlist_name + "' created"
+
+    def add_song_to_playlist(self, playlist_name, song_url):
+        return "Playlist '" + playlist_name + "' updated"
+
     async def cmd_np(self, player, channel, server, message):
         """
         Usage:
