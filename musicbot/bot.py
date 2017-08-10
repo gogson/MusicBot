@@ -1361,6 +1361,19 @@ class MusicBot(discord.Client):
         return "Playlist '" + playlist_name + "' created"
 
     def add_song_to_playlist(self, playlist_name, song_url):
+        playlist = open("./playlists/" + playlist_name +".pl", "r+")
+        data = playlist.readlines()
+        index = -1
+        
+        try:
+            # Look if the song is already in the playlist file
+            index = data.index(song_url + '\n')
+        except:
+            # If not, add it
+            playlist.write(song_url + '\n')
+
+        if index >= 0:
+            return "Song is already in '" + playlist_name + "' playlist"
         return "Playlist '" + playlist_name + "' updated"
 
     def playlist_folder_exists(self):
