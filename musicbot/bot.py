@@ -1330,16 +1330,17 @@ class MusicBot(discord.Client):
         
         return Response(output)
 
-    async def cmd_playlist(self, player, channel, author, permissions, leftover_args, name, action, song_url=""):
+    async def cmd_playlist(self, player, channel, author, permissions, leftover_args, name, action="", song_url=""):
         """
-        Manage playlists.
+        Play and manage playlists. If no action, the playlist is played.
 
         Usage:
-             {command_prefix}playlist name action [song_url]
+             {command_prefix}playlist name [action] [song_url]
 
-        Available actions : 
-        - create -> create a playlist with the given name
-        - add    -> add a song by url to the given playlist
+        Available actions:
+        - create      -> create a playlist with the given name
+        - add         -> add a song by url to the given playlist
+
         """
 
         output = "Unknown action"
@@ -1347,8 +1348,17 @@ class MusicBot(discord.Client):
             output = self.create_playlist(name)
         elif action == "add":
             output = self.add_song_to_playlist(name, song_url)
+        elif action == "":
+            output = self.play_playlist(name, player)
 
         return Response(output)
+
+    def play_playlist(self, playlist_name, player):
+        player.playlist.clear()
+        self.autoplaylist = load_file("playlists/" + playlist_name + ".pl")
+        player.skip()
+
+        return "Start playing '" + playlist_name + "' playlist"
 
     def create_playlist(self, playlist_name):
         self.playlist_folder_exists()
