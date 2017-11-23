@@ -1306,6 +1306,18 @@ class MusicBot(discord.Client):
 
         return Response("Mmmmmm.....YES !")
 
+    async def cmd_gillette(self, player, channel, author, permissions):
+        """
+        Usage:
+            {command_prefix}gillette
+
+        The Face Of Twitch
+        """
+        await self.cmd_play(player, channel, author, permissions, [], "https://www.youtube.com/watch?v=9fWxCIi5PIw")
+        player.skip()  # check autopause stuff here
+
+        return Response("RAAAAAOUUUUUUUULLLL")
+
     async def cmd_add(self, player, channel, author, permissions, leftover_args, song_url):
         """
         Usage:
